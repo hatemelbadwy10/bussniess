@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:business_app/app_routing/route_names.dart';
 import 'package:business_app/app_routing/routing_data.dart';
+import 'package:business_app/core/services/service_locator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../features/auth/presentation/controller/login_bloc/login_bloc.dart';
 import '../features/auth/presentation/view/login_view.dart';
 import '../features/splash/presentation/splash_screen.dart';
 
@@ -26,7 +29,10 @@ class AppRouter {
       case RouteNames.splashScreen:
         return _getPageRoute(const SplashScreen(), settings);
       case RouteNames.loginScreen:
-        return _getPageRoute(const LoginView(),settings);
+        return _getPageRoute(BlocProvider(
+          create: (context) => LoginBloc(getIt()),
+          child: const LoginView(),
+        ), settings);
       default:
         return _getPageRoute(Container(), settings);
     }
@@ -52,24 +58,20 @@ class _FadeRoute extends PageRouteBuilder {
 
   _FadeRoute({this.child, this.routeName})
       : super(
-          settings: RouteSettings(name: routeName),
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              child!,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-        );
+    settings: RouteSettings(name: routeName),
+    pageBuilder: (BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,) =>
+    child!,
+    transitionsBuilder: (BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,) =>
+        FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+  );
 }
 
 Map<String, dynamic> _getArguments(RouteSettings settings) {
@@ -82,8 +84,8 @@ Route animationSwitch(Widget destination, String routeName) {
   return PageRouteBuilder(
     settings: RouteSettings(name: routeName),
     pageBuilder: (BuildContext context, Animation<double> animation,
-            Animation<double> secondaryAnimation) =>
-        destination,
+        Animation<double> secondaryAnimation) =>
+    destination,
     transitionDuration: const Duration(milliseconds: 1200),
     reverseTransitionDuration: const Duration(milliseconds: 1200),
     transitionsBuilder: (BuildContext context, Animation<double> animation,
