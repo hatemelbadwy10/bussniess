@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class ApiFaliureModel extends Equatable {
-  final int status;
+  final bool status;
   final String message;
   final String data;
 

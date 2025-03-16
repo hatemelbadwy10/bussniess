@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_routing/app_router.dart';
 import 'app_routing/route_names.dart';
+import 'core/services/navigation_service.dart';
 import 'core/services/service_locator.dart';
 
 void main() async{
@@ -15,10 +16,11 @@ class ExBusiness extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RouteNames.loginScreen,
+      initialRoute: RouteNames.splashScreen,
       onGenerateRoute: AppRouter.generateRoute,
+      navigatorKey: getIt<NavigationService>().navigatorKey,
     );
   }
 }

@@ -3,10 +3,13 @@ import 'dart:io';
 import 'package:business_app/app_routing/route_names.dart';
 import 'package:business_app/app_routing/routing_data.dart';
 import 'package:business_app/core/services/service_locator.dart';
+import 'package:business_app/features/auth/presentation/view/otp_view.dart';
+import 'package:business_app/features/auth/presentation/view/reset_password.dart';
+import 'package:business_app/features/home/presentation/view/home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../features/auth/presentation/controller/login_bloc/login_bloc.dart';
+import '../features/auth/presentation/controller/login_bloc.dart';
 import '../features/auth/presentation/view/login_view.dart';
 import '../features/splash/presentation/splash_screen.dart';
 
@@ -33,6 +36,18 @@ class AppRouter {
           create: (context) => LoginBloc(getIt()),
           child: const LoginView(),
         ), settings);
+      case RouteNames.verifyLoginScreen:
+        return _getPageRoute(BlocProvider(
+          create: (context) => LoginBloc(getIt()),
+          child: const OtpView(),
+        ), settings);
+      case RouteNames.resetPassword:
+        return _getPageRoute(BlocProvider(
+          create: (context) => LoginBloc(getIt()),
+          child:  ResetPassword(arguments: _getArguments(settings),),
+        ), settings);
+      case RouteNames.homeView:
+        return _getPageRoute(const HomeView(), settings);
       default:
         return _getPageRoute(Container(), settings);
     }

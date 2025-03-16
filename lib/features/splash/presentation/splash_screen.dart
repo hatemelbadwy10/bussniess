@@ -58,8 +58,8 @@ class _SplashScreenState extends State<SplashScreen>
             statusBarIconBrightness: Brightness.dark,
           ),
         );
-        const route =  RouteNames.loginScreen;
-        getIt<NavigationService>().navigateToAndClearStack(RouteNames.loginScreen);
+        final route = loggedIn ? RouteNames.homeView : RouteNames.loginScreen;
+        getIt<NavigationService>().navigateToAndClearStack(route);
       }
     });
   }
