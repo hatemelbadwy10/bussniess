@@ -47,7 +47,7 @@ class AppRouter {
           child:  ResetPassword(arguments: _getArguments(settings),),
         ), settings);
       case RouteNames.homeView:
-        return _getPageRoute(const HomeView(), settings);
+        return _getPageRoute(const HomeScreen(), settings);
       default:
         return _getPageRoute(Container(), settings);
     }
